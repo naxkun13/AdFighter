@@ -6,6 +6,10 @@ public abstract class Character : MonoBehaviour {
 	[SerializeField]
 	private float speed;
 
+	[SerializeField]
+	public int level;
+
+
 	private Rigidbody2D rb2d;
 
 	public bool IsMoving {
@@ -16,6 +20,20 @@ public abstract class Character : MonoBehaviour {
 
 	private Animator animator;
 	protected Vector2 direction;
+
+	public int MyLevel
+	{
+		get
+		{
+			return level;
+		}
+		set
+		{ 
+			level = value;
+		}
+	}
+
+
 
 	protected virtual void Start () {
 		animator = GetComponent<Animator> ();
@@ -32,7 +50,9 @@ public abstract class Character : MonoBehaviour {
 	private void FixedUpdate()
 	{
 		Move();
+
 	}
+
 
 	public void Move()
 	{
