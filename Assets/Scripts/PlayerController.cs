@@ -12,12 +12,20 @@ public class PlayerController : Character {
 	[SerializeField]
 	private Text levelText;
 
+	[SerializeField]
+	private Transform[] firePoints;
+
+	private int fireIndex = 1;
+
+	[SerializeField]
+	private GameObject bulletPrefab;
 
 	private float initHealth = 100;
 
 
 	protected override void Start()
 	{
+		firePoints [0].transform.localScale += Vector3.left;
 		health.Initialize (initHealth, initHealth);
 		base.Start ();
 	}
@@ -28,11 +36,11 @@ public class PlayerController : Character {
 		GetInput ();
 		GetLevel ();
 		LevelUp();
-
 		levelText.text = MyLevel.ToString ();
 
 		base.Update ();
 	}
+
 
 	private void GetLevel()
 	{
@@ -75,6 +83,11 @@ public class PlayerController : Character {
 		}
 
 
+		if (Input.GetKeyDown (KeyCode.F)) 
+		{
+			shoot ();
+		}	
+
 
 		if (Input.GetKey (KeyCode.W)) 
 		{
@@ -82,15 +95,23 @@ public class PlayerController : Character {
 		}
 		if (Input.GetKey (KeyCode.D)) 
 		{
+			fireIndex = 1;
 			direction += Vector2.right;
 		}
 		if (Input.GetKey (KeyCode.A)) 
 		{
+			fireIndex = 0;
+			firePoints [0].position.Set (0f, -180f, 0f);
 			direction += Vector2.left;
 		}
 		if (Input.GetKey (KeyCode.S)) 
 		{
 			direction += Vector2.down;
 		}
+	}
+	public void shoot ()
+	{
+		Instantiate (bulletPrefab, firePoints[fireIndex].position , Quaternion.identity);
+
 	}
 }
