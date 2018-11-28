@@ -71,11 +71,8 @@ public abstract class Character : MonoBehaviour {
 	public void ActivateLayer(string layername)
 	{
 		for (int i = 0; i < animator.layerCount; i++) {
-
 			animator.SetLayerWeight (i, 0);
 		}
-
-		animator.SetLayerWeight (animator.GetLayerIndex (layername), 1);
 	}
 
 	public void HandleLayers()
