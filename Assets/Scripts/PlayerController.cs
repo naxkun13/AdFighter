@@ -12,14 +12,24 @@ public class PlayerController : Character {
 	[SerializeField]
 	private Text levelText;
 
+	[SerializeField]
+	private Transform[] firePoints;
+
+	private int fireIndex = 1;
+
+	[SerializeField]
+	private GameObject bulletPrefab;
+
+    private Quaternion rot;
 
 	private float initHealth = 100;
 
-
-	protected override void Start()
+    protected override void Start()
 	{
+		firePoints [0].transform.localScale += Vector3.left;
 		health.Initialize (initHealth, initHealth);
 		base.Start ();
+        rot = new Quaternion(0, 0, 0, 0);
 	}
 
 	protected override void Update()
@@ -28,16 +38,30 @@ public class PlayerController : Character {
 		GetInput ();
 		GetLevel ();
 		LevelUp();
-
 		levelText.text = MyLevel.ToString ();
+        CalculateShootAngles();
 
-		base.Update ();
+        base.Update ();
 	}
+
 
 	private void GetLevel()
 	{
 		exp.Initialize (exp.MyCurrentValue, 100 * MyLevel * Mathf.Pow (MyLevel, 0.4f));
 	}
+
+    private void CalculateShootAngles()
+    {
+        if ( direction == Vector2.up) { 
+            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
+        } else if (direction == Vector2.down) {
+            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -90);
+        } else if (direction == Vector2.right) {
+            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
+        } else if (direction == Vector2.left) {
+            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
+        }
+    }
 
 	private void LevelUp()
 	{
@@ -51,8 +75,6 @@ public class PlayerController : Character {
 
 	private void GetInput()
 	{
-
-
 		direction = Vector2.zero;
 
 		//debug HP I = -10hp; O = +10hp.
@@ -75,6 +97,11 @@ public class PlayerController : Character {
 		}
 
 
+		if (Input.GetKeyDown (KeyCode.F)) 
+		{
+			shoot ();
+		}	
+
 
 		if (Input.GetKey (KeyCode.W)) 
 		{
@@ -82,15 +109,22 @@ public class PlayerController : Character {
 		}
 		if (Input.GetKey (KeyCode.D)) 
 		{
+			fireIndex = 1;
 			direction += Vector2.right;
-		}
+        }
 		if (Input.GetKey (KeyCode.A)) 
 		{
+			fireIndex = 0;
+			firePoints [0].position.Set (0f, -180f, 0f);
 			direction += Vector2.left;
-		}
+        }
 		if (Input.GetKey (KeyCode.S)) 
 		{
 			direction += Vector2.down;
-		}
+        }
+	}
+	public void shoot ()
+	{
+		Instantiate (bulletPrefab, firePoints[fireIndex].position , rot);
 	}
 }
