@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 212284012838748862}
   - component: {fileID: 50005355961476074}
   - component: {fileID: 60029756386344976}
+  - component: {fileID: 114908689483561448}
   m_Layer: 0
   m_Name: Spearman
   m_TagString: Untagged
@@ -122,6 +123,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114908689483561448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1778867742140412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aafb5f7fc6d6b1408886845d98196d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 5
 --- !u!212 &212284012838748862
 SpriteRenderer:
   m_ObjectHideFlags: 1
