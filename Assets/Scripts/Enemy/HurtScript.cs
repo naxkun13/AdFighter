@@ -20,7 +20,7 @@ public class HurtScript : MonoBehaviour {
         if (collision.gameObject.tag.Equals("Bullet"))
         {
             //Destroy(collision.gameObject);
-            --Health;
+            Health -= 5;
             if (Health <= 0)
                 Destroy(gameObject);
         }
