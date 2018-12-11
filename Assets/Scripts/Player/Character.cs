@@ -44,7 +44,7 @@ public abstract class Character : MonoBehaviour {
 
 
 	protected virtual void Update () {
-		HandleLayers ();
+		AnimateMovement  (direction);
 
 	}
 
@@ -68,7 +68,7 @@ public abstract class Character : MonoBehaviour {
 		animator.SetFloat ("y", direction.y);
 	}
 
-	public void ActivateLayer(string layername)
+	/*public void ActivateLayer(string layername)
 	{
 		for (int i = 0; i < animator.layerCount; i++) {
 			animator.SetLayerWeight (i, 0);
@@ -78,14 +78,15 @@ public abstract class Character : MonoBehaviour {
 	public void HandleLayers()
 	{
 		if (IsMoving) {
-			AnimateMovement  (direction);
 			ActivateLayer("WalkLayer");
+			AnimateMovement  (direction);
+
 
 		} else 
 		{
 			ActivateLayer ("BaseLayer");
 		}
 	}
-
+*/
 
 }

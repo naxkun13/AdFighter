@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e7e8e4ed06d4d0e4eb014cce677f3bd5
+guid: 792c2131142954247b9cf1a3de6f6c6d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Character_Down_0
-    21300002: Character_Down_1
-    21300004: Character_Down_2
-    21300006: Character_Down_3
+    21300000: Character_Left_0
+    21300002: Character_Left_1
+    21300004: Character_Left_2
+    21300006: Character_Left_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -88,27 +88,27 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Down_0
+      name: Character_Left_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.51, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98d815b744b8cde4e83424a3db67c268
+      spriteID: c2c7682203ed6fc4d98e232a4ec32c4b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Down_1
+      name: Character_Left_1
       rect:
         serializedVersion: 2
         x: 32
@@ -116,19 +116,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0461bd158f220d74db6d168ab2ddc12c
+      spriteID: 35b5bd95692cf3c469f7cfd3a026661f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Down_2
+      name: Character_Left_2
       rect:
         serializedVersion: 2
         x: 64
@@ -136,19 +136,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2eecc2ae83c1634fa57bee3f949092a
+      spriteID: f7c2c2747b45a7845826fc11bc73eed7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Down_3
+      name: Character_Left_3
       rect:
         serializedVersion: 2
         x: 96
@@ -156,13 +156,13 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18207aeddd6155949bf117209d89db0b
+      spriteID: 58f263867f85c654280550f349b822ad
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 368038ae28b69be4a908f14c7bdfb437
+    spriteID: 573d893d7df14724dafec01ce16d16b1
     vertices: []
     indices: 
     edges: []
