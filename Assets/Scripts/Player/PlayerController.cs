@@ -105,6 +105,7 @@ public class PlayerController : Character {
 
 		if (Input.GetKey (KeyCode.W)) 
 		{
+			fireIndex = 2;
 			direction += Vector2.up;
 		}
 		if (Input.GetKey (KeyCode.D)) 
@@ -120,6 +121,7 @@ public class PlayerController : Character {
         }
 		if (Input.GetKey (KeyCode.S)) 
 		{
+			fireIndex = 3;
 			direction += Vector2.down;
         }
 	}
