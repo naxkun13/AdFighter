@@ -52,13 +52,13 @@ public class PlayerController : Character {
 
     private void CalculateShootAngles()
     {
-        if ( direction == Vector2.up) { 
+        if ( Direction == Vector2.up) { 
             rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
-        } else if (direction == Vector2.down) {
+        } else if (Direction == Vector2.down) {
             rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -90);
-        } else if (direction == Vector2.right) {
+        } else if (Direction == Vector2.right) {
             rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
-        } else if (direction == Vector2.left) {
+        } else if (Direction == Vector2.left) {
             rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
         }
     }
@@ -75,7 +75,7 @@ public class PlayerController : Character {
 
 	private void GetInput()
 	{
-		direction = Vector2.zero;
+		Direction = Vector2.zero;
 
 		//debug HP I = -10hp; O = +10hp.
 		if (Input.GetKeyDown (KeyCode.I)) 
@@ -106,23 +106,23 @@ public class PlayerController : Character {
 		if (Input.GetKey (KeyCode.W)) 
 		{
 			fireIndex = 2;
-			direction += Vector2.up;
+			Direction += Vector2.up;
 		}
 		if (Input.GetKey (KeyCode.D)) 
 		{
 			fireIndex = 1;
-			direction += Vector2.right;
+			Direction += Vector2.right;
         }
 		if (Input.GetKey (KeyCode.A)) 
 		{
 			fireIndex = 0;
 			firePoints [0].position.Set (0f, -180f, 0f);
-			direction += Vector2.left;
+			Direction += Vector2.left;
         }
 		if (Input.GetKey (KeyCode.S)) 
 		{
 			fireIndex = 3;
-			direction += Vector2.down;
+			Direction += Vector2.down;
         }
 	}
 	public void shoot ()
