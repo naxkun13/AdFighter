@@ -48,3 +48,6 @@ TagManager:
   - name: 2
     uniqueID: 1803108667
     locked: 0
+  - name: Bar
+    uniqueID: 139467415
+    locked: 0
