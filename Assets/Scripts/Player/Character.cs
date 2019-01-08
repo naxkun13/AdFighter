@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour {
-	[SerializeField]
-	private float speed;
+    [SerializeField]
+    private float speed;
 
-	[SerializeField]
+    [SerializeField]
 	public int level;
 
 
@@ -14,14 +14,14 @@ public abstract class Character : MonoBehaviour {
 
 	public bool IsMoving {
 		get { 
-			return direction.x != 0 || direction.y != 0;
+			return Direction.x != 0 || Direction.y != 0;
 		}
 	}
 
 	private Animator animator;
-	protected Vector2 direction;
+    private Vector2 direction;
 
-	public int MyLevel
+    public int MyLevel
 	{
 		get
 		{
@@ -33,9 +33,33 @@ public abstract class Character : MonoBehaviour {
 		}
 	}
 
+    public Vector2 Direction
+    {
+        get
+        {
+            return direction;
+        }
 
+        set
+        {
+            direction = value;
+        }
+    }
 
-	protected virtual void Start () {
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+
+        set
+        {
+            speed = value;
+        }
+    }
+
+    protected virtual void Start () {
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D>();
 
@@ -44,7 +68,7 @@ public abstract class Character : MonoBehaviour {
 
 
 	protected virtual void Update () {
-		AnimateMovement  (direction);
+		AnimateMovement  (Direction);
 
 	}
 
@@ -57,7 +81,7 @@ public abstract class Character : MonoBehaviour {
 
 	public void Move()
 	{
-		rb2d.velocity = direction.normalized * speed;
+		rb2d.velocity = Direction.normalized * Speed;
 	}
 
 	public void AnimateMovement (Vector2 direction)
