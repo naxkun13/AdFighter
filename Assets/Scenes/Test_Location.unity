@@ -532,6 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   level: 1
+  direction: {x: 0, y: 0}
   health: {fileID: 2048643990}
   exp: {fileID: 1324443983}
   levelText: {fileID: 110676463}
@@ -1018,7 +1019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1778867742140412, guid: ef94f4b47c913404a8afb05852d4471c, type: 3}
-  spawnRate: 5
+  spawnRate: 10
 --- !u!1 &730658285
 GameObject:
   m_ObjectHideFlags: 0
