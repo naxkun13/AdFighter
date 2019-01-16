@@ -14,6 +14,8 @@ public class Enemy : NPC {
 
     public float MyAttackRange { get; set; }
 
+    public float MyAttackTime { get; set; }
+
 	public Transform Target
 	{
 		get
@@ -35,6 +37,11 @@ public class Enemy : NPC {
 
 	protected override void Update ()
 	{
+        if (!isAttacking)
+        {
+            MyAttackTime += Time.deltaTime;
+        }
+
         currentState.Update();
 
 		base.Update ();

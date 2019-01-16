@@ -11,15 +11,19 @@ public abstract class Character : MonoBehaviour {
 
 
 	private Rigidbody2D rb2d;
+    public Vector2 direction;
 
-	public bool IsMoving {
+    public bool IsMoving {
 		get { 
-			return Direction.x != 0 || Direction.y != 0;
+			return direction.x != 0 || direction.y != 0;
 		}
 	}
 
-	private Animator animator;
-    private Vector2 direction;
+    public Animator MyAnimator { get; set; }
+
+    
+
+    public bool isAttacking { get; set; }
 
     public int MyLevel
 	{
@@ -60,7 +64,7 @@ public abstract class Character : MonoBehaviour {
     }
 
     protected virtual void Start () {
-		animator = GetComponent<Animator> ();
+		MyAnimator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D>();
 
 	}
@@ -68,8 +72,8 @@ public abstract class Character : MonoBehaviour {
 
 
 	protected virtual void Update () {
-		AnimateMovement  (Direction);
-
+	//	AnimateMovement  (Direction);
+        HandleLayers();
 	}
 
 	private void FixedUpdate()
@@ -81,36 +85,37 @@ public abstract class Character : MonoBehaviour {
 
 	public void Move()
 	{
-		rb2d.velocity = Direction.normalized * Speed;
+		rb2d.velocity = direction.normalized * Speed;
 	}
 
-	public void AnimateMovement (Vector2 direction)
-	{
-		// переключение условий в слоях аниматора
-		//  animator.SetLayerWeight (1,1); 
-		animator.SetFloat ("x", direction.x);
-		animator.SetFloat ("y", direction.y);
-	}
 
-	/*public void ActivateLayer(string layername)
+    
+	public void ActivateLayer(string layerName)
 	{
-		for (int i = 0; i < animator.layerCount; i++) {
-			animator.SetLayerWeight (i, 0);
+		for (int i = 0; i < MyAnimator.layerCount; i++) {
+			MyAnimator.SetLayerWeight (i, 0);
 		}
+        MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
 	}
 
 	public void HandleLayers()
 	{
-		if (IsMoving) {
-			ActivateLayer("WalkLayer");
-			AnimateMovement  (direction);
+		if (IsMoving)
+        {
+			ActivateLayer("Walk");
 
-
-		} else 
+            MyAnimator.SetFloat("x", direction.x);
+            MyAnimator.SetFloat("y", direction.y);
+        }
+        else if (isAttacking)
 		{
-			ActivateLayer ("BaseLayer");
+			ActivateLayer ("Attack");
 		}
+        else
+        {
+            ActivateLayer("Idle");
+        }
 	}
-*/
+
 
 }
