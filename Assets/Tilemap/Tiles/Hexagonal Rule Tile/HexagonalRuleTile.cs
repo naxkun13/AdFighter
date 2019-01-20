@@ -74,14 +74,14 @@ namespace UnityEngine
             }
 
             // Check rule against x-axis mirror
-            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorX) && RuleMatches(rule, ref neighboringTiles, true, false))
+            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorX) && RuleMatches(rule, ref neighboringTiles, TilingRule.Transform.MirrorX))
             {
                 transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(-1f, 1f, 1f));
                 return true;
             }
 
             // Check rule against y-axis mirror
-            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorY) && RuleMatches(rule, ref neighboringTiles, false, true))
+            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorY) && RuleMatches(rule, ref neighboringTiles, TilingRule.Transform.MirrorY))
             {
                 transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(1f, -1f, 1f));
                 return true;
@@ -127,21 +127,21 @@ namespace UnityEngine
             return (original + rotation / 60) % neighborCount;
         }
 
-        protected override int GetMirroredIndex(int original, bool mirrorX, bool mirrorY)
+        protected override int GetMirroredIndex(int original, TilingRule.Transform axis)
         {
-            if (mirrorX && mirrorY)
+            System.Random rnd = new System.Random();
+            switch (axis)
             {
-                return RotatedOrMirroredIndexes[2, original];
+                case TilingRule.Transform.MirrorX:
+                    return RotatedOrMirroredIndexes[m_FlatTop ? 3 : 0, original];
+                case TilingRule.Transform.MirrorY:
+                    return RotatedOrMirroredIndexes[m_FlatTop ? 4 : 1, original];
+                case TilingRule.Transform.MirrorXOrY:
+                    int value = rnd.Next(0, 4);
+                    return RotatedOrMirroredIndexes[value, original];
+                default:
+                    return original;
             }
-            if (mirrorX)
-            {
-                return RotatedOrMirroredIndexes[m_FlatTop ? 3 : 0, original];
-            }
-            if (mirrorY)
-            {
-                return RotatedOrMirroredIndexes[m_FlatTop ? 4 : 1, original];
-            }
-            return original;
         }
 
         private Vector3Int GetOffsetPosition(Vector3Int location, int direction)

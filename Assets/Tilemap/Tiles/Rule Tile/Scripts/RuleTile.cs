@@ -15,6 +15,7 @@ namespace UnityEngine
     {
 
         public virtual Type m_NeighborType { get { return typeof(TilingRule.Neighbor); } }
+        System.Random rnd = new System.Random();
 
         private static readonly int[,] RotatedOrMirroredIndexes =
         {
@@ -76,7 +77,7 @@ namespace UnityEngine
                 public const int This = 1;
                 public const int NotThis = 2;
             }
-            public enum Transform { Fixed, Rotated, MirrorX, MirrorY }
+            public enum Transform { Fixed, Rotated, MirrorX, MirrorY, MirrorXOrY }
             public enum OutputSprite { Single, Random, Animation }
         }
 
@@ -191,18 +192,27 @@ namespace UnityEngine
             }
 
             // Check rule against x-axis mirror
-            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorX) && RuleMatches(rule, ref neighboringTiles, true, false))
+            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorX) && RuleMatches(rule, ref neighboringTiles, TilingRule.Transform.MirrorX))
             {
                 transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(-1f, 1f, 1f));
                 return true;
             }
 
             // Check rule against y-axis mirror
-            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorY) && RuleMatches(rule, ref neighboringTiles, false, true))
-            {
+            if ((rule.m_RuleTransform == TilingRule.Transform.MirrorY) && RuleMatches(rule, ref neighboringTiles, TilingRule.Transform.MirrorY))
+            {                
                 transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(1f, -1f, 1f));
                 return true;
             }
+
+            // Check rule against y-axis mirror
+            //if ((rule.m_RuleTransform == TilingRule.Transform.MirrorXOrY) && RuleMatches(rule, ref neighboringTiles, TilingRule.Transform.MirrorXOrY))
+            //{
+            //    int value = rnd.Next(1, 2);
+            //    Vector3 axis = value == 1 ? new Vector3(-1f, 1f, 1f) : new Vector3(1f, -1f, 1f);
+            //    transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, axis);
+            //    return true;
+            //}
 
             return false;
         }
@@ -219,6 +229,10 @@ namespace UnityEngine
                 case TilingRule.Transform.Rotated:
                     int angle = Mathf.Clamp(Mathf.FloorToInt(perlin * 4), 0, 3) * 90;
                     return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, -angle), Vector3.one);
+                case TilingRule.Transform.MirrorXOrY:
+                    int value = rnd.Next(1, 3);
+                    Vector3 axis = value == 1 ? new Vector3(perlin < 0.5 ? 1f : -1f, 1f, 1f) : new Vector3(1f, perlin < 0.5 ? 1f : -1f, 1f);
+                    return original * Matrix4x4.TRS(Vector3.zero, Quaternion.identity, axis);
             }
             return original;
         }
@@ -247,11 +261,11 @@ namespace UnityEngine
             return true;
         }
 
-        protected bool RuleMatches(TilingRule rule, ref TileBase[] neighboringTiles, bool mirrorX, bool mirrorY)
+        protected bool RuleMatches(TilingRule rule, ref TileBase[] neighboringTiles, TilingRule.Transform axis)
         {
             for (int i = 0; i < neighborCount; ++i)
             {
-                int index = GetMirroredIndex(i, mirrorX, mirrorY);
+                int index = GetMirroredIndex(i, axis);
                 TileBase tile = neighboringTiles[index];
                 if (!RuleMatch(rule.m_Neighbors[i], tile))
                 {
@@ -300,21 +314,22 @@ namespace UnityEngine
             return original;
         }
 
-        protected virtual int GetMirroredIndex(int original, bool mirrorX, bool mirrorY)
+        protected virtual int GetMirroredIndex(int original, TilingRule.Transform axis)
         {
-            if (mirrorX && mirrorY)
+            switch (axis)
             {
-                return RotatedOrMirroredIndexes[1, original];
+                case TilingRule.Transform.MirrorX:
+                    return RotatedOrMirroredIndexes[3, original];
+                case TilingRule.Transform.MirrorY:
+                    return RotatedOrMirroredIndexes[4, original];
+                case TilingRule.Transform.MirrorXOrY:
+                    int value = rnd.Next(1, 5);
+                    value = value == 2 ? 1 : value;
+                    return RotatedOrMirroredIndexes[value, original];
+                default:
+                    return original;
             }
-            if (mirrorX)
-            {
-                return RotatedOrMirroredIndexes[3, original];
-            }
-            if (mirrorY)
-            {
-                return RotatedOrMirroredIndexes[4, original];
-            }
-            return original;
+           
         }
     }
 }
