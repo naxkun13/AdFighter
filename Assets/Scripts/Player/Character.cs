@@ -66,8 +66,11 @@ public abstract class Character : MonoBehaviour {
     protected virtual void Start () {
 		MyAnimator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D>();
+        if (PlayerPrefs.HasKey("MyLevel"))
+            MyLevel = PlayerPrefs.GetInt("MyLevel");
 
-	}
+
+    }
 
 
 
