@@ -8,7 +8,6 @@ public class StartGame : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             SceneManager.LoadScene(1);
-            print("mouse - ok!");
         }
     }
 }
