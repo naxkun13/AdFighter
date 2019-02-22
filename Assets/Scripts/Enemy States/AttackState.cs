@@ -48,9 +48,9 @@ public class AttackState : IState
 
     public IEnumerator Attack()
     {
-        parent.isAttacking = true;
+        parent.EnemyisAttacking = true;
         parent.MyAnimator.SetTrigger("attack");
         yield return new WaitForSeconds(parent.MyAnimator.GetCurrentAnimatorStateInfo(1).length);
-        parent.isAttacking = false;
+        parent.EnemyisAttacking = false;
     }
 }

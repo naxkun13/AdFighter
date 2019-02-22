@@ -9,9 +9,23 @@ public abstract class Character : MonoBehaviour {
     [SerializeField]
 	public int level;
 
+    [SerializeField]
+    protected Stat health;
 
-	private Rigidbody2D rb2d;
+    [SerializeField]
+    private Collider2D swordColliderR;
+    [SerializeField]
+    private Collider2D swordColliderL;
+
+    public abstract bool IsDead { get; }
+
+    [SerializeField]
+    private List<string> DamageSources;
+
+    private Rigidbody2D rb2d;
     public Vector2 direction;
+
+    public bool TakingDamage { get; set; }
 
     public bool IsMoving {
 		get { 
@@ -21,9 +35,12 @@ public abstract class Character : MonoBehaviour {
 
     public Animator MyAnimator { get; set; }
 
-    
+
+
+    public bool EnemyisAttacking { get; set; }
 
     public bool isAttacking { get; set; }
+   
 
     public int MyLevel
 	{
@@ -63,6 +80,21 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
+    public Collider2D SwordColliderR
+    {
+        get
+        {
+            return swordColliderR;
+        }
+    }
+    public Collider2D SwordColliderL
+    {
+        get
+        {
+            return swordColliderL;
+        }
+    }
+
     protected virtual void Start () {
 		MyAnimator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D>();
@@ -72,15 +104,22 @@ public abstract class Character : MonoBehaviour {
 
 
 	protected virtual void Update () {
-	//	AnimateMovement  (Direction);
-        HandleLayers();
-	}
+        if (!TakingDamage && !IsDead)
+        {
+            HandleLayers();
+        }
+    }
 
-	private void FixedUpdate()
-	{
-		Move();
+    public abstract IEnumerator TakeDamage();
 
-	}
+    private void FixedUpdate()
+    {
+        if (!TakingDamage && !IsDead)
+        {
+            Move();
+            ResetValues();
+        }
+    }
 
 
 	public void Move()
@@ -89,12 +128,13 @@ public abstract class Character : MonoBehaviour {
 	}
 
 
-    
-	public void ActivateLayer(string layerName)
+    public void ActivateLayer(string layerName)
 	{
+        //сбрасывание значения веса слоя после выполнения
 		for (int i = 0; i < MyAnimator.layerCount; i++) {
 			MyAnimator.SetLayerWeight (i, 0);
 		}
+        //установка нужного слоя в значение веса - 1
         MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
 	}
 
@@ -107,15 +147,45 @@ public abstract class Character : MonoBehaviour {
             MyAnimator.SetFloat("x", direction.x);
             MyAnimator.SetFloat("y", direction.y);
         }
-        else if (isAttacking)
-		{
-			ActivateLayer ("Attack");
-		}
+      
+        else if (EnemyisAttacking)
+        {
+            ActivateLayer("Enemy_Attack");
+        }
         else
         {
             ActivateLayer("Idle");
         }
-	}
+        if (isAttacking)
+        {
+            ActivateLayer("Attack");
+            MyAnimator.SetTrigger("attack");
+        }
+    }
+
+    public void MeleeAttack()
+    {
+        if (gameObject.transform.position.x > 0.1)
+        {
+            swordColliderR.enabled = true;
+        } 
+        else if (gameObject.transform.position.x < -0.1)
+        {
+            swordColliderL.enabled = true;
+        }
+    }
 
 
+    public virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        if (DamageSources.Contains(other.tag))
+        {
+            StartCoroutine(TakeDamage());
+        }
+    }
+
+    private void ResetValues()
+    {
+        isAttacking = false;
+    }
 }
