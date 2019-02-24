@@ -112,12 +112,14 @@ public class PlayerController : Character {
 		{
 			fireIndex = 1;
 			Direction += Vector2.right;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 		if (Input.GetKey (KeyCode.A)) 
 		{
 			fireIndex = 0;
 			firePoints [0].position.Set (0f, -180f, 0f);
 			Direction += Vector2.left;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 		if (Input.GetKey (KeyCode.S)) 
 		{
