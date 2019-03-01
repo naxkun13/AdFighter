@@ -27,20 +27,22 @@ public abstract class Character : MonoBehaviour {
 
     public bool TakingDamage { get; set; }
 
-    public bool IsMoving {
-		get { 
-			return direction.x != 0 || direction.y != 0;
-		}
-	}
-
     public Animator MyAnimator { get; set; }
 
-
+    public abstract IEnumerator TakeDamage();
 
     public bool EnemyisAttacking { get; set; }
 
     public bool isAttacking { get; set; }
-   
+
+
+    public bool IsMoving
+    {
+        get
+        {
+            return direction.x != 0 || direction.y != 0;
+        }
+    }
 
     public int MyLevel
 	{
@@ -110,7 +112,7 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
-    public abstract IEnumerator TakeDamage();
+ 
 
     private void FixedUpdate()
     {
@@ -182,6 +184,7 @@ public abstract class Character : MonoBehaviour {
         {
             StartCoroutine(TakeDamage());
         }
+
     }
 
     private void ResetValues()

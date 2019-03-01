@@ -6,22 +6,34 @@ public class Bullet : MonoBehaviour {
 
 	public float speed;
 	public Rigidbody2D rb;
+    private Vector2 direction;
 
     void Start() 
  	{
         rb = GetComponent<Rigidbody2D>();
-        rb.AddRelativeForce(Vector2.right * speed, ForceMode2D.Impulse);
 	}
+
+    private void FixedUpdate()
+    {
+        rb.velocity = direction * speed;
+    }
 
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Initialize(Vector2 direction)
     {
-        if(collision.gameObject.tag.Equals("Enemy"))
-            Destroy(gameObject);
+        this.direction = direction;
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+            Destroy(gameObject);
+            Debug.Log("Bullet has been destroyed");
+        }
+    }
 }

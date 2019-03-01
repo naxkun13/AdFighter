@@ -25,7 +25,6 @@ public class PlayerController : Character {
     private float initHealth = 50;
 
 
-
     public override bool IsDead
     {
         get
@@ -50,7 +49,8 @@ public class PlayerController : Character {
             GetLevel();
             LevelUp();
             levelText.text = MyLevel.ToString();
-            CalculateShootAngles();
+            //CalculateShootAngles();
+            DebugInput();
  
         }
         else
@@ -66,18 +66,6 @@ public class PlayerController : Character {
         exp.Initialize(exp.MyCurrentValue, 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
     }
 
-    private void CalculateShootAngles()
-    {
-        if (Direction == Vector2.up) {
-            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
-        } else if (Direction == Vector2.down) {
-            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -90);
-        } else if (Direction == Vector2.right) {
-            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
-        } else if (Direction == Vector2.left) {
-            rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
-        }
-    }
 
     private void LevelUp()
     {
@@ -92,38 +80,6 @@ public class PlayerController : Character {
     private void GetInput()
     {
         Direction = Vector2.zero;
-
-        //debug HP I = -10hp; O = +10hp.
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            health.MyCurrentValue -= 10;
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            health.MyCurrentValue += 10;
-        }
-        //debug EXP K = +10xp; L = -10xp.
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            exp.MyCurrentValue += 50;
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            exp.MyCurrentValue -= 50;
-        }
-
-        //shooting
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            shoot();
-        }
-
-        //melee
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            StartCoroutine(Attack());
-        }
-
 
         //moving
         if (Input.GetKey(KeyCode.W))
@@ -148,17 +104,51 @@ public class PlayerController : Character {
             Direction += Vector2.down;
         }
 
+      
+
+    }
+
+    private void DebugInput()
+    {
+        //debug HP I = -10hp; O = +10hp.
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            health.MyCurrentValue -= 10;
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            health.MyCurrentValue += 10;
+        }
+        //debug EXP K = +10xp; L = -10xp.
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            exp.MyCurrentValue += 50;
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            exp.MyCurrentValue -= 50;
+        }
+
+        //shooting
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ShootBullet(0);
+        }
+
+        //melee
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            StartCoroutine(Attack());
+        }
+
         //debug taking damage Y = -10HP
         if (Input.GetKey(KeyCode.Y))
         {
             StartCoroutine(TakeDamage());
         }
+    }
 
-    }
-    public void shoot()
-    {
-        Instantiate(bulletPrefab, firePoints[fireIndex].position, rot);
-    }
+
 
     public IEnumerator Attack()
     {
@@ -183,5 +173,18 @@ public class PlayerController : Character {
         yield return null;
     }
 
-  
+
+    public void ShootBullet(int value)
+    {
+        if (Direction == Vector2.right || Direction == Vector2.zero)
+        {
+           GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0,0,0)));
+            tmp.GetComponent<Bullet>().Initialize(Vector2.right);
+        }
+        else
+        {
+            GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
+            tmp.GetComponent<Bullet>().Initialize(Vector2.left);
+        }
+    }
 }
