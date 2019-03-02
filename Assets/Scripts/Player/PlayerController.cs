@@ -49,14 +49,12 @@ public class PlayerController : Character {
             GetLevel();
             LevelUp();
             levelText.text = MyLevel.ToString();
-            //CalculateShootAngles();
             DebugInput();
  
         }
         else
-        {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
+
         base.Update();
     }
 
@@ -87,18 +85,18 @@ public class PlayerController : Character {
             fireIndex = 2;
             Direction += Vector2.up;
         }
-        if (Input.GetKey(KeyCode.D))
+        else if(Input.GetKey(KeyCode.D))
         {
             fireIndex = 1;
             Direction += Vector2.right;
         }
-        if (Input.GetKey(KeyCode.A))
+        else if(Input.GetKey(KeyCode.A))
         {
             fireIndex = 0;
             firePoints[0].position.Set(0f, -180f, 0f);
             Direction += Vector2.left;
         }
-        if (Input.GetKey(KeyCode.S))
+        else if(Input.GetKey(KeyCode.S))
         {
             fireIndex = 3;
             Direction += Vector2.down;
@@ -112,43 +110,24 @@ public class PlayerController : Character {
     {
         //debug HP I = -10hp; O = +10hp.
         if (Input.GetKeyDown(KeyCode.I))
-        {
             health.MyCurrentValue -= 10;
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
+        else if (Input.GetKeyDown(KeyCode.O))
             health.MyCurrentValue += 10;
-        }
         //debug EXP K = +10xp; L = -10xp.
-        if (Input.GetKeyDown(KeyCode.K))
-        {
+        else if(Input.GetKeyDown(KeyCode.K))
             exp.MyCurrentValue += 50;
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
+        else if(Input.GetKeyDown(KeyCode.L))
             exp.MyCurrentValue -= 50;
-        }
-
         //shooting
-        if (Input.GetKeyDown(KeyCode.F))
-        {
+        else if(Input.GetKeyDown(KeyCode.F))
             ShootBullet(0);
-        }
-
         //melee
-        if (Input.GetKeyDown(KeyCode.C))
-        {
+        else if(Input.GetKeyDown(KeyCode.C))
             StartCoroutine(Attack());
-        }
-
         //debug taking damage Y = -10HP
-        if (Input.GetKey(KeyCode.Y))
-        {
+        else if(Input.GetKey(KeyCode.Y))
             StartCoroutine(TakeDamage());
-        }
     }
-
-
 
     public IEnumerator Attack()
     {
@@ -163,13 +142,10 @@ public class PlayerController : Character {
         health.MyCurrentValue -= 10;
 
         if (!IsDead)
-        {
             MyAnimator.SetTrigger("damage");
-        }
         else
-        {
             MyAnimator.SetTrigger("death");
-        }
+
         yield return null;
     }
 
@@ -186,73 +162,4 @@ public class PlayerController : Character {
             tmp.GetComponent<Bullet>().Initialize(Vector2.left);
         }
     }
-
-	private void LevelUp()
-	{
-		if (exp.MyCurrentValue == exp.MyMaxValue)
-		{
-			MyLevel += 1;
-			exp.MyCurrentValue = 0;
-		}
-		
-	}
-
-	private void GetInput()
-	{
-		Direction = Vector2.zero;
-
-		//debug HP I = -10hp; O = +10hp.
-		if (Input.GetKeyDown (KeyCode.I)) 
-		{
-			health.MyCurrentValue -= 10;
-		}
-		if (Input.GetKeyDown (KeyCode.O)) 
-		{
-			health.MyCurrentValue += 10;
-		}
-		//debug EXP K = +10xp; L = -10xp.
-		if (Input.GetKeyDown (KeyCode.K)) 
-		{
-			exp.MyCurrentValue += 50;
-		}
-		if (Input.GetKeyDown (KeyCode.L)) 
-		{
-			exp.MyCurrentValue -= 50;
-		}
-
-
-		if (Input.GetKeyDown (KeyCode.F)) 
-		{
-			shoot ();
-		}	
-
-
-		if (Input.GetKey (KeyCode.W)) 
-		{
-			fireIndex = 2;
-			Direction += Vector2.up;
-		}
-		if (Input.GetKey (KeyCode.D)) 
-		{
-			fireIndex = 1;
-			Direction += Vector2.right;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-		if (Input.GetKey (KeyCode.A)) 
-		{
-			fireIndex = 0;
-			firePoints [0].position.Set (0f, -180f, 0f);
-			Direction += Vector2.left;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-		if (Input.GetKey (KeyCode.S)) 
-		{
-			fireIndex = 3;
-			Direction += Vector2.down;
-        }
-	}
-	public void shoot ()
-	{
-		Instantiate (bulletPrefab, firePoints[fireIndex].position , rot);
-	}
 }
