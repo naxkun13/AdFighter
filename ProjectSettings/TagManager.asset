@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
     locked: 0
   - name: 2
     uniqueID: 1803108667
+    locked: 0
+  - name: 3
+    uniqueID: 1945868655
     locked: 0
