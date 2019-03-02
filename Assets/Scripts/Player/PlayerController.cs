@@ -34,11 +34,12 @@ public class PlayerController : Character {
     }
 
     protected override void Start()
-    {
+	{
         firePoints[0].transform.localScale += Vector3.left;
         health.Initialize(initHealth, initHealth);
         base.Start();
         rot = new Quaternion(0, 0, 0, 0);
+        if( PlayerPrefs.HasKey("PlayerExp") ) exp.Initialize(PlayerPrefs.GetFloat("PlayerExp"), 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
     }
 
     protected override void Update()
@@ -71,8 +72,10 @@ public class PlayerController : Character {
         {
             MyLevel += 1;
             exp.MyCurrentValue = 0;
-        }
 
+            PlayerPrefs.SetInt("MyLevel", MyLevel);
+            PlayerPrefs.SetFloat("PlayerExp", exp.MyCurrentValue);
+        }
     }
 
     private void GetInput()
@@ -161,5 +164,11 @@ public class PlayerController : Character {
             GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
             tmp.GetComponent<Bullet>().Initialize(Vector2.left);
         }
+	}
+
+    public void AddExp(int expToAdd)
+    {
+        exp.MyCurrentValue += expToAdd;
+        PlayerPrefs.SetFloat("PlayerExp", exp.MyCurrentValue);
     }
 }

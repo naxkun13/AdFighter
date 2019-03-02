@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HurtScript : MonoBehaviour {
     public int Health = 10;
+    private PlayerController thePlayerStats;
+    public int expToGive;
 
 	// Use this for initialization
 	void Start () {
-		
+        thePlayerStats = FindObjectOfType<PlayerController>();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +25,11 @@ public class HurtScript : MonoBehaviour {
             //Destroy(collision.gameObject);
             Health -= 5;
             if (Health <= 0)
+            {
                 Destroy(gameObject);
+                thePlayerStats.AddExp( expToGive );
+
+            }
         }
     }
 }
