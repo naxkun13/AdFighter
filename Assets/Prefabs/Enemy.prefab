@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 5
+  expToGive: 50
 --- !u!114 &8028189542450372445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.6
   level: 0
+  direction: {x: 0, y: 0}
   healthGroup: {fileID: 0}
 --- !u!1 &6987951425431409465
 GameObject:
