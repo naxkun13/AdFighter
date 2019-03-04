@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : Character {
-
-
     [SerializeField]
     private Stat exp;
 
@@ -24,26 +22,26 @@ public class PlayerController : Character {
     [SerializeField]
     private float initHealth = 50;
 
-
-    public override bool IsDead
-    {
-        get
-        {
-            return health.MyCurrentValue <= 0;
-        }
+    public override bool IsDead {
+        get { return health.MyCurrentValue <= 0; }
     }
 
-    protected override void Start()
-	{
+    protected override void Start() {
         firePoints[0].transform.localScale += Vector3.left;
-        health.Initialize(initHealth, initHealth);
         base.Start();
         rot = new Quaternion(0, 0, 0, 0);
-        if( PlayerPrefs.HasKey("PlayerExp") ) exp.Initialize(PlayerPrefs.GetFloat("PlayerExp"), 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
+        if (PlayerPrefs.HasKey("PlayerExp"))
+            exp.Initialize(PlayerPrefs.GetFloat("PlayerExp"), 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
+        else
+            exp.Initialize(1, 100 * Mathf.Pow(1, 0.4f) );
+
+        if (PlayerPrefs.HasKey("MyHP"))
+            health.Initialize(PlayerPrefs.GetFloat("MyHP"), MyLevel * 50);
+        else
+            health.Initialize(initHealth, initHealth);
     }
 
-    protected override void Update()
-    {
+    protected override void Update() {
         if (!TakingDamage && !IsDead)
         {
             GetInput();
@@ -51,7 +49,6 @@ public class PlayerController : Character {
             LevelUp();
             levelText.text = MyLevel.ToString();
             DebugInput();
- 
         }
         else
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -59,58 +56,45 @@ public class PlayerController : Character {
         base.Update();
     }
 
-
-    private void GetLevel()
-    {
+    private void GetLevel() {
         exp.Initialize(exp.MyCurrentValue, 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
     }
 
-
-    private void LevelUp()
-    {
+    private void LevelUp() {
         if (exp.MyCurrentValue == exp.MyMaxValue)
         {
             MyLevel += 1;
             exp.MyCurrentValue = 0;
+            health.MyCurrentValue = health.MyMaxValue;
 
             PlayerPrefs.SetInt("MyLevel", MyLevel);
             PlayerPrefs.SetFloat("PlayerExp", exp.MyCurrentValue);
+            PlayerPrefs.SetFloat("MyHP", health.MyCurrentValue);
         }
     }
 
-    private void GetInput()
-    {
+    private void GetInput() {
         Direction = Vector2.zero;
 
         //moving
-        if (Input.GetKey(KeyCode.W))
-        {
+        if (Input.GetKey(KeyCode.W)) {
             fireIndex = 2;
             Direction += Vector2.up;
-        }
-        else if(Input.GetKey(KeyCode.D))
-        {
+        } else if(Input.GetKey(KeyCode.D)) {
             fireIndex = 1;
             Direction += Vector2.right;
         }
-        else if(Input.GetKey(KeyCode.A))
-        {
+        else if(Input.GetKey(KeyCode.A)) {
             fireIndex = 0;
             firePoints[0].position.Set(0f, -180f, 0f);
             Direction += Vector2.left;
-        }
-        else if(Input.GetKey(KeyCode.S))
-        {
+        } else if(Input.GetKey(KeyCode.S)) {
             fireIndex = 3;
             Direction += Vector2.down;
         }
-
-      
-
     }
 
-    private void DebugInput()
-    {
+    private void DebugInput() {
         //debug HP I = -10hp; O = +10hp.
         if (Input.GetKeyDown(KeyCode.I))
             health.MyCurrentValue -= 10;
@@ -132,42 +116,37 @@ public class PlayerController : Character {
             StartCoroutine(TakeDamage());
     }
 
-    public IEnumerator Attack()
-    {
+    public IEnumerator Attack() {
         isAttacking = true;
         MyAnimator.SetTrigger("attack");
         yield return new WaitForSeconds(MyAnimator.GetCurrentAnimatorStateInfo(1).length);
         isAttacking = false;
     }
 
-    public override IEnumerator TakeDamage()
-    {
+    public override IEnumerator TakeDamage() {
         health.MyCurrentValue -= 10;
 
-        if (!IsDead)
+        if (!IsDead) {
             MyAnimator.SetTrigger("damage");
+            PlayerPrefs.SetFloat("MyHP", health.MyCurrentValue);
+        }
         else
             MyAnimator.SetTrigger("death");
 
         yield return null;
     }
 
-    public void ShootBullet(int value)
-    {
-        if (Direction == Vector2.right || Direction == Vector2.zero)
-        {
-           GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0,0,0)));
+    public void ShootBullet(int value) {
+        if (Direction == Vector2.right || Direction == Vector2.zero) {
+            GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0,0,0)));
             tmp.GetComponent<Bullet>().Initialize(Vector2.right);
-        }
-        else
-        {
+        } else {
             GameObject tmp = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
             tmp.GetComponent<Bullet>().Initialize(Vector2.left);
         }
 	}
 
-    public void AddExp(int expToAdd)
-    {
+    public void AddExp(int expToAdd) {
         exp.MyCurrentValue += expToAdd;
         PlayerPrefs.SetFloat("PlayerExp", exp.MyCurrentValue);
     }

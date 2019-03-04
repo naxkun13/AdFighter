@@ -12,25 +12,19 @@ public class Stat : MonoBehaviour {
 
 	private Image content;
 	private float currentFill;
-	public float MyMaxValue { get; set;}
+	public  float MyMaxValue { get; set;}
 	private float currentValue;
-	public float MyCurrentValue
-	{
-		get
-		{
-			return currentValue;
-		}
 
-		set
-		{
+	public float MyCurrentValue {
+		get { return currentValue; }
+
+		set {
 			if (value > MyMaxValue) {
 				currentValue = MyMaxValue;
 			} else if (value < 0) {
 				currentValue = 0;
 			} else 
-			{
 				currentValue = value;
-			}
 
 			currentFill = currentValue / MyMaxValue;
 
@@ -40,23 +34,18 @@ public class Stat : MonoBehaviour {
 
 
 	// Use this for initialization
-	protected virtual void Start () 
-	{
+	protected virtual void Start () {
 		content = GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
+	void Update () {
 		if (currentFill != content.fillAmount) 
-		{
 			content.fillAmount = Mathf.Lerp (content.fillAmount, currentFill, Time.fixedTime * lerpSpeed);
-		}
 		Debug.Log (MyCurrentValue);
 	}
 
-	public void Initialize(float currentValue, float maxValue)
-	{
+	public void Initialize(float currentValue, float maxValue) {
 		MyMaxValue = maxValue;
 		MyCurrentValue = currentValue;
 	}
