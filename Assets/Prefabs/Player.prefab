@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   level: 1
+  direction: {x: 0, y: 0}
   health: {fileID: 0}
   swordColliderR: {fileID: 0}
   swordColliderL: {fileID: 0}
@@ -279,7 +280,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.3377953}
   m_EdgeRadius: 0

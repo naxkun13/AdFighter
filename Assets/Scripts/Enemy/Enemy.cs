@@ -17,87 +17,70 @@ public class Enemy : Character {
 
     [SerializeField]
     private float initHealth = 100;
+    
+    private PlayerController thePlayerStats;
 
-    public Transform Target
-    {
-        get
-        {
-            return playerPos;
-        }
+    [SerializeField]
+    private int expToGive;
 
-        set
-        {
-            playerPos = value;
-        }
+    // Use this for initialization
+    protected override void Start() {
+        base.Start();
+        thePlayerStats = FindObjectOfType<PlayerController>();
     }
 
-    public override bool IsDead
-    {
-        get
-        {
-            return initHealth <= 0;
-        }
+    public Transform Target {
+        get { return playerPos; }
+        set { playerPos = value; }
     }
 
-    protected void Awake()
-    {
+    public override bool IsDead {
+        get { return initHealth <= 0; }
+    }
+
+    protected void Awake() {
         MyAttackRange = 0.5;
         ChangeState(new IdleState());
     }
 
-    protected override void Update()
-    {
+    protected override void Update() {
         if (!EnemyisAttacking)
-        {
             MyAttackTime += Time.deltaTime;
-        }
 
         if (!IsDead)
         {
             if(!TakingDamage)
-            {
                 currentState.Update();
-            }
 
             base.Update();
         }
-
-     
     }
 
-
-    public void ChangeState(IState newState)
-    {
+    public void ChangeState(IState newState) {
         if (currentState != null)
-        {
             currentState.Exit();
-        }
 
         currentState = newState;
 
         currentState.Enter(this);
     }
 
-    public override void OnTriggerEnter2D(Collider2D other)
-    {
+    public override void OnTriggerEnter2D(Collider2D other) {
         base.OnTriggerEnter2D(other);
     }
 
-    public override IEnumerator TakeDamage()
-    {
+    public override IEnumerator TakeDamage() {
         initHealth -= 10;
 
         if (!IsDead)
-        {
             MyAnimator.SetTrigger("damage");
-        }
-        else
+        else if( initHealth > -10 )
         {
+            thePlayerStats.AddExp(expToGive);
             MyAnimator.SetTrigger("death");
 
             yield return new WaitForSeconds(5);
             Destroy(gameObject);
         }
     }
-
 }

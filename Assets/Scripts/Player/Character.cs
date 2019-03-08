@@ -36,102 +36,58 @@ public abstract class Character : MonoBehaviour {
     public bool isAttacking { get; set; }
 
 
-    public bool IsMoving
-    {
-        get
-        {
-            return direction.x != 0 || direction.y != 0;
-        }
+    public bool IsMoving {
+        get { return direction.x != 0 || direction.y != 0; }
     }
 
-    public int MyLevel
-	{
-		get
-		{
-			return level;
-		}
-		set
-		{ 
-			level = value;
-		}
+    public int MyLevel {
+		get { return level;  }
+		set { level = value; }
 	}
 
-    public Vector2 Direction
-    {
-        get
-        {
-            return direction;
-        }
-
-        set
-        {
-            direction = value;
-        }
+    public Vector2 Direction {
+        get { return direction;  }
+        set { direction = value; }
     }
 
-    public float Speed
-    {
-        get
-        {
-            return speed;
-        }
-
-        set
-        {
-            speed = value;
-        }
+    public float Speed {
+        get { return speed;  }
+        set { speed = value; }
     }
 
-    public Collider2D SwordColliderR
-    {
-        get
-        {
-            return swordColliderR;
-        }
+    public Collider2D SwordColliderR {
+        get { return swordColliderR; }
     }
-    public Collider2D SwordColliderL
-    {
-        get
-        {
-            return swordColliderL;
-        }
+    public Collider2D SwordColliderL {
+        get { return swordColliderL;  }
     }
 
     protected virtual void Start () {
 		MyAnimator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D>();
-
-	}
-
-
+        if (PlayerPrefs.HasKey("MyLevel"))
+            MyLevel = PlayerPrefs.GetInt("MyLevel");
+    }
 
 	protected virtual void Update () {
         if (!TakingDamage && !IsDead)
-        {
             HandleLayers();
-        }
     }
 
- 
-
-    private void FixedUpdate()
-    {
-        if (!TakingDamage && !IsDead)
-        {
+    private void FixedUpdate() {
+        if (!TakingDamage && !IsDead) {
             Move();
             ResetValues();
         }
     }
 
 
-	public void Move()
-	{
+	public void Move() {
 		rb2d.velocity = direction.normalized * Speed;
 	}
 
 
-    public void ActivateLayer(string layerName)
-	{
+    public void ActivateLayer(string layerName) {
         //сбрасывание значения веса слоя после выполнения
 		for (int i = 0; i < MyAnimator.layerCount; i++) {
 			MyAnimator.SetLayerWeight (i, 0);
@@ -140,24 +96,17 @@ public abstract class Character : MonoBehaviour {
         MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
 	}
 
-	public void HandleLayers()
-	{
-		if (IsMoving)
-        {
+	public void HandleLayers() {
+		if (IsMoving) {
 			ActivateLayer("Walk");
 
             MyAnimator.SetFloat("x", direction.x);
             MyAnimator.SetFloat("y", direction.y);
-        }
-      
-        else if (EnemyisAttacking)
-        {
+        } else if (EnemyisAttacking) {
             ActivateLayer("Enemy_Attack");
-        }
-        else
-        {
+        } else
             ActivateLayer("Idle");
-        }
+
         if (isAttacking)
         {
             ActivateLayer("Attack");
@@ -165,30 +114,19 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
-    public void MeleeAttack()
-    {
+    public void MeleeAttack() {
         if (gameObject.transform.position.x > 0.1)
-        {
             swordColliderR.enabled = true;
-        } 
         else if (gameObject.transform.position.x < -0.1)
-        {
             swordColliderL.enabled = true;
-        }
     }
 
-
-    public virtual void OnTriggerEnter2D(Collider2D other)
-    {
+    public virtual void OnTriggerEnter2D(Collider2D other) {
         if (DamageSources.Contains(other.tag))
-        {
             StartCoroutine(TakeDamage());
-        }
-
     }
 
-    private void ResetValues()
-    {
+    private void ResetValues() {
         isAttacking = false;
     }
 }
