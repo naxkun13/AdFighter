@@ -215,7 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9098290647545079525}
   - component: {fileID: 1392859342564208894}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpearColliderR
   m_TagString: Spear
   m_Icon: {fileID: 0}
@@ -273,8 +273,7 @@ GameObject:
   - component: {fileID: 3898050583060246349}
   - component: {fileID: 8160252954406502336}
   - component: {fileID: 2863742251675680162}
-  - component: {fileID: 4619371583864793869}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Agro
   m_TagString: Agro
   m_Icon: {fileID: 0}
@@ -323,19 +322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff9c8a478f7aa540a3d4f55db50ce5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4619371583864793869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6987951425431409465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8b267d88ec35584b8a2009963da9466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  other: {fileID: 70717167929411116, guid: f0f2364f98c87644592138ecc5bae49d, type: 3}
 --- !u!1 &8937068147361474959
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7611957614798457762}
   - component: {fileID: 4340130966329512879}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpearColliderL
   m_TagString: Spear
   m_Icon: {fileID: 0}

@@ -16,11 +16,13 @@ public class Bullet : MonoBehaviour {
     private void FixedUpdate()
     {
         rb.velocity = direction * speed;
+
     }
 
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+  
     }
 
     public void Initialize(Vector2 direction)
@@ -28,12 +30,12 @@ public class Bullet : MonoBehaviour {
         this.direction = direction;
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Enemy"))
+        if (!collision.gameObject.tag.Equals("Player"))
         {
             Destroy(gameObject);
-            Debug.Log("Bullet has been destroyed");
+            Debug.Log(collision.name);
         }
     }
 }
