@@ -80,17 +80,20 @@ public class PlayerController : Character {
         if (Input.GetKey(KeyCode.W)) {
             fireIndex = 2;
             Direction += Vector2.up;
-        } else if(Input.GetKey(KeyCode.D)) {
-            fireIndex = 1;
-            Direction += Vector2.right;
+        } else if (Input.GetKey(KeyCode.S))
+        {
+            fireIndex = 3;
+            Direction += Vector2.down;
         }
-        else if(Input.GetKey(KeyCode.A)) {
+        
+        if(Input.GetKey(KeyCode.A)) {
             fireIndex = 0;
             firePoints[0].position.Set(0f, -180f, 0f);
             Direction += Vector2.left;
-        } else if(Input.GetKey(KeyCode.S)) {
-            fireIndex = 3;
-            Direction += Vector2.down;
+        } else if (Input.GetKey(KeyCode.D))
+        {
+            fireIndex = 1;
+            Direction += Vector2.right;
         }
     }
 
