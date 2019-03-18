@@ -210,11 +210,6 @@ namespace UnityEditor
                 case RuleTile.TilingRule.Transform.MirrorY:
                     GUI.DrawTexture(rect, autoTransforms[2]);
                     break;
-                case RuleTile.TilingRule.Transform.MirrorXOrY:
-                    System.Random rnd = new System.Random();
-                    int value = rnd.Next(1, 3);
-                    Texture2D axis = autoTransforms[value];
-                    break;
             }
         }
 

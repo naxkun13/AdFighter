@@ -42,7 +42,6 @@ public class Stat : MonoBehaviour {
 	void Update () {
 		if (currentFill != content.fillAmount) 
 			content.fillAmount = Mathf.Lerp (content.fillAmount, currentFill, Time.fixedTime * lerpSpeed);
-		Debug.Log (MyCurrentValue);
 	}
 
 	public void Initialize(float currentValue, float maxValue) {

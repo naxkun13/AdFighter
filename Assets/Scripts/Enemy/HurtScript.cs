@@ -11,24 +11,15 @@ public class HurtScript : MonoBehaviour {
 	void Start () {
         thePlayerStats = FindObjectOfType<PlayerController>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Bullet"))
-        {
+        if (collision.gameObject.tag.Equals("Bullet")) {
             //Destroy(collision.gameObject);
             Health -= 5;
-            if (Health <= 0)
-            {
+            if (Health <= 0) {
                 Destroy(gameObject);
                 thePlayerStats.AddExp( expToGive );
-
             }
         }
     }

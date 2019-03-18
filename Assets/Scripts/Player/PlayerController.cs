@@ -12,12 +12,8 @@ public class PlayerController : Character {
     [SerializeField]
     private Transform[] firePoints;
 
-    private int fireIndex = 1;
-
     [SerializeField]
     private GameObject bulletPrefab;
-
-    private Quaternion rot;
 
     [SerializeField]
     private float initHealth = 50;
@@ -29,7 +25,6 @@ public class PlayerController : Character {
     protected override void Start() {
         firePoints[0].transform.localScale += Vector3.left;
         base.Start();
-        rot = new Quaternion(0, 0, 0, 0);
         if (PlayerPrefs.HasKey("PlayerExp"))
             exp.Initialize(PlayerPrefs.GetFloat("PlayerExp"), 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
         else
@@ -78,21 +73,17 @@ public class PlayerController : Character {
 
         //moving
         if (Input.GetKey(KeyCode.W)) {
-            fireIndex = 2;
             Direction += Vector2.up;
         } else if (Input.GetKey(KeyCode.S))
         {
-            fireIndex = 3;
             Direction += Vector2.down;
         }
         
         if(Input.GetKey(KeyCode.A)) {
-            fireIndex = 0;
             firePoints[0].position.Set(0f, -180f, 0f);
             Direction += Vector2.left;
         } else if (Input.GetKey(KeyCode.D))
         {
-            fireIndex = 1;
             Direction += Vector2.right;
         }
     }

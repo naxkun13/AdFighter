@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class NPC : Character
 {
-    public override bool IsDead
-    {
-        get
-        {
-            throw new System.NotImplementedException();
-        }
+    public override bool IsDead {
+        get { throw new System.NotImplementedException(); }
     }
 
-    public override IEnumerator TakeDamage()
-    {
+    public override IEnumerator TakeDamage() {
         throw new System.NotImplementedException();
     }
 }
