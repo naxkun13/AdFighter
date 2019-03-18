@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 4851766855838721066}
   - component: {fileID: 4851766855838721046}
   - component: {fileID: 4851766855838721047}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -244,6 +244,10 @@ MonoBehaviour:
   level: 1
   direction: {x: 0, y: 0}
   health: {fileID: 0}
+  swordColliderR: {fileID: 0}
+  swordColliderL: {fileID: 0}
+  DamageSources: []
+  direction: {x: 0, y: 0}
   exp: {fileID: 0}
   levelText: {fileID: 0}
   firePoints:
@@ -253,6 +257,7 @@ MonoBehaviour:
   - {fileID: 4851766854122848094}
   bulletPrefab: {fileID: 1262302898308584, guid: f0f2364f98c87644592138ecc5bae49d,
     type: 3}
+  initHealth: 50
 --- !u!61 &4851766855838721046
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -266,7 +271,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.13432916}
+  m_Offset: {x: 0.02, y: -0.13432916}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.51, y: 0.5}
@@ -277,7 +282,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 1
   serializedVersion: 2
-  m_Size: {x: 0.48645362, y: 0.3377953}
+  m_Size: {x: 0.25, y: 0.3377953}
   m_EdgeRadius: 0
 --- !u!95 &4851766855838721047
 Animator:

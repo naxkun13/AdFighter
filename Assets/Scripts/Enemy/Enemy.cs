@@ -3,62 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Enemy : NPC {
+public class Enemy : Character {
 
-	[SerializeField]
-	private CanvasGroup healthGroup;
+    [SerializeField]
 
-	private Transform playerPos;
+    private Transform playerPos;
 
     private IState currentState;
 
-    public float MyAttackRange { get; set; }
+    public double MyAttackRange { get; set; }
 
     public float MyAttackTime { get; set; }
 
-	public Transform Target
-	{
-		get
-		{
-			return playerPos;
-		}
+    [SerializeField]
+    private float initHealth = 100;
+    
+    private PlayerController thePlayerStats;
 
-		set
-		{
-			playerPos = value;
-		}
-	}
+    [SerializeField]
+    private int expToGive;
 
-    protected void Awake()
-    {
-        MyAttackRange = 1;
+    // Use this for initialization
+    protected override void Start() {
+        base.Start();
+        thePlayerStats = FindObjectOfType<PlayerController>();
+    }
+
+    public Transform Target {
+        get { return playerPos; }
+        set { playerPos = value; }
+    }
+
+    public override bool IsDead {
+        get { return initHealth <= 0; }
+    }
+
+    protected void Awake() {
+        MyAttackRange = 0.5;
         ChangeState(new IdleState());
     }
 
-	protected override void Update ()
-	{
-        if (!isAttacking)
-        {
+    protected override void Update() {
+        if (!EnemyisAttacking)
             MyAttackTime += Time.deltaTime;
-        }
 
-        currentState.Update();
-
-		base.Update ();
-	}
-  
-
-    public void ChangeState(IState newState)
-    {
-        if (currentState != null)
+        if (!IsDead)
         {
-            currentState.Exit();
+            if(!TakingDamage)
+                currentState.Update();
+
+            base.Update();
         }
+    }
+
+    public void ChangeState(IState newState) {
+        if (currentState != null)
+            currentState.Exit();
 
         currentState = newState;
 
         currentState.Enter(this);
     }
 
-		
+    public override void OnTriggerEnter2D(Collider2D other) {
+        base.OnTriggerEnter2D(other);
+    }
+
+    public override IEnumerator TakeDamage() {
+        initHealth -= 10;
+
+        if (!IsDead)
+            MyAnimator.SetTrigger("damage");
+        else if( initHealth > -10 )
+        {
+            thePlayerStats.AddExp(expToGive);
+            MyAnimator.SetTrigger("death");
+
+            yield return new WaitForSeconds(5);
+            Destroy(gameObject);
+        }
+    }
 }
