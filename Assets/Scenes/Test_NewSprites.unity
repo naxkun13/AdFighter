@@ -352,6 +352,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &822833993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1778867742140412, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_Name
+      value: Enemy Ex
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180335552821768, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8028189542450372445, guid: 35d89e74667d7af47b69fbdfda908650,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6987951425431409465, guid: 35d89e74667d7af47b69fbdfda908650,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160252954406502336, guid: 35d89e74667d7af47b69fbdfda908650,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.79
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35d89e74667d7af47b69fbdfda908650, type: 3}
 --- !u!1001 &827952406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -402,7 +474,7 @@ PrefabInstance:
     - target: {fileID: 7419693455222583153, guid: 3aed430a23c25e04494d849fe5e3b6d6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7419693455222583153, guid: 3aed430a23c25e04494d849fe5e3b6d6,
         type: 3}
@@ -574,7 +646,7 @@ Transform:
   m_Children:
   - {fileID: 1933599701}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1068480917
 PrefabInstance:
@@ -626,7 +698,7 @@ PrefabInstance:
     - target: {fileID: 4851766855838721045, guid: d01d47b8169b0e843937fdb350d4f0b8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4851766855838721045, guid: d01d47b8169b0e843937fdb350d4f0b8,
         type: 3}
