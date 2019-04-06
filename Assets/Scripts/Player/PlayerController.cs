@@ -10,6 +10,9 @@ public class PlayerController : Character {
     private Text levelText;
 
     [SerializeField]
+    private float movespeed;
+
+    [SerializeField]
     private Transform[] firePoints;
 
     [SerializeField]
@@ -18,13 +21,28 @@ public class PlayerController : Character {
     [SerializeField]
     private float initHealth = 50;
 
-    public override bool IsDead {
-        get { return health.MyCurrentValue <= 0; }
+    private Rigidbody2D rb2d;
+    private bool facingRight;
+
+
+
+    protected override void FixedUpdate()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        transform.Translate(Input.GetAxis("Horizontal") * movespeed, Input.GetAxis("Vertical") * movespeed, 0f);
+        Flip(horizontal);
+
+        base.FixedUpdate();
     }
 
     protected override void Start() {
         firePoints[0].transform.localScale += Vector3.left;
         base.Start();
+
+        rb2d = GetComponent<Rigidbody2D>();
+        facingRight = true;
+
         if (PlayerPrefs.HasKey("PlayerExp"))
             exp.Initialize(PlayerPrefs.GetFloat("PlayerExp"), 100 * MyLevel * Mathf.Pow(MyLevel, 0.4f));
         else
@@ -39,16 +57,32 @@ public class PlayerController : Character {
     protected override void Update() {
         if (!TakingDamage && !IsDead)
         {
-            GetInput();
+            
             GetLevel();
             LevelUp();
             levelText.text = MyLevel.ToString();
             DebugInput();
         }
         else
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         base.Update();
+    }
+
+    private void Flip(float horizontal)
+    {
+        if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
+        {
+            facingRight = !facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
+    }
+
+    public override bool IsDead
+    {
+        get { return health.MyCurrentValue <= 0; }
     }
 
     private void GetLevel() {
@@ -68,25 +102,35 @@ public class PlayerController : Character {
         }
     }
 
-    private void GetInput() {
-        Direction = Vector2.zero;
+    private void GetInputH(float horizontal)
+    {
+        //Direction = Vector2.zero;
 
         //moving
-        if (Input.GetKey(KeyCode.W)) {
-            Direction += Vector2.up;
-        } else if (Input.GetKey(KeyCode.S))
-        {
-            Direction += Vector2.down;
-        }
-        
-        if(Input.GetKey(KeyCode.A)) {
-            firePoints[0].position.Set(0f, -180f, 0f);
-            Direction += Vector2.left;
-        } else if (Input.GetKey(KeyCode.D))
-        {
-            Direction += Vector2.right;
-        }
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    Direction += Vector2.up;
+        //}
+        //else if (Input.GetKey(KeyCode.S))
+        //{
+        //    Direction += Vector2.down;
+        //}
+
+        //    if(Input.GetKey(KeyCode.A)) {
+        //        firePoints[0].position.Set(0f, -180f, 0f);
+        //        Direction += Vector2.left;
+        //    } else if (Input.GetKey(KeyCode.D))
+        //    {
+        //        Direction += Vector2.right;
+        //    }
+        //rb2d.velocity = new Vector2(horizontal * movespeed, rb2d.velocity.x);
+
     }
+    //private void GetInputV(float vertical)
+    //{
+    //    rb2d.velocity = new Vector2(vertical * movespeed, rb2d.velocity.y);
+    //}
+
 
     private void DebugInput() {
         //debug HP I = -10hp; O = +10hp.

@@ -45,13 +45,15 @@ public abstract class Character : MonoBehaviour {
 		set { level = value; }
 	}
 
-    public Vector2 Direction {
-        get { return direction;  }
+    public Vector2 Direction
+    {
+        get { return direction; }
         set { direction = value; }
     }
 
-    public float Speed {
-        get { return speed;  }
+    public float Speed
+    {
+        get { return speed; }
         set { speed = value; }
     }
 
@@ -74,7 +76,7 @@ public abstract class Character : MonoBehaviour {
             HandleLayers();
     }
 
-    private void FixedUpdate() {
+    protected virtual void FixedUpdate() {
         if (!TakingDamage && !IsDead) {
             Move();
             ResetValues();
@@ -82,9 +84,10 @@ public abstract class Character : MonoBehaviour {
     }
 
 
-	public void Move() {
-		rb2d.velocity = direction.normalized * Speed;
-	}
+    public void Move()
+    {
+        rb2d.velocity = direction.normalized * Speed;
+    }
 
 
     public void ActivateLayer(string layerName) {
