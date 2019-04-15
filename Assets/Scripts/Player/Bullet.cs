@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	public float speed;
+    [SerializeField] private float speed = 500;
 	public Rigidbody2D rb;
     private Vector2 direction;
 
@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour {
 	}
 
     private void FixedUpdate() {
-        rb.velocity = direction * speed;
+        rb.velocity = direction * speed * Time.deltaTime;
     }
 
     private void OnBecameInvisible() {

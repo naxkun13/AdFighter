@@ -279,6 +279,9 @@ MonoBehaviour:
   speed: 250
   joystickMovement: {fileID: 1473934352}
   joystickDirection: {fileID: 1513909459}
+  bulletPrefab: {fileID: 1262302898308584, guid: f0f2364f98c87644592138ecc5bae49d,
+    type: 3}
+  shootingDelay: 0.1
 --- !u!1 &751652438
 GameObject:
   m_ObjectHideFlags: 0
