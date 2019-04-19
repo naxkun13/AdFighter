@@ -117,8 +117,8 @@ public abstract class Character : MonoBehaviour {
     public void MeleeAttack() {
         if (gameObject.transform.position.x > 0.1)
             swordColliderR.enabled = true;
-        else if (gameObject.transform.position.x < -0.1)
-            swordColliderL.enabled = true;
+        //else if (gameObject.transform.position.x < -0.1)
+       //     swordColliderL.enabled = true;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D other) {

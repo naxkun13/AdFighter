@@ -3,20 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : Character {
-    [SerializeField]
-    private Stat exp;
+    [SerializeField] private Stat exp;
 
-    [SerializeField]
-    private Text levelText;
+    [SerializeField] private Text levelText;
 
-    [SerializeField]
-    private Transform[] firePoints;
+    [SerializeField] private Transform[] firePoints;
 
-    [SerializeField]
-    private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletPrefab;
 
-    [SerializeField]
-    private float initHealth = 50;
+    [SerializeField] private float initHealth = 50;
 
     public override bool IsDead {
         get { return health.MyCurrentValue <= 0; }
